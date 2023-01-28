@@ -1,6 +1,6 @@
 from typing import Final
 from pyteal import *
-from beaker import Application, Authorize, ApplicationStateValue, AccountStateValue, external, create, optin
+from beaker import Application, Authorize, ApplicationStateValue, AccountStateValue, external, create, opt_in
 
 
 class Asset(Application):
@@ -23,8 +23,8 @@ class Asset(Application):
 	def create(self):
 		return self.initialize_application_state()
 
-	@optin
-	def optin(self):
+	@opt_in
+	def opt_in(self):
 		return Seq(
 			self.initialize_account_state(),
 			self.has_opted_in.set(Int(1))
@@ -94,7 +94,7 @@ class Asset(Application):
 		aid: abi.Asset=asset_id # type: ignore[assignment]
 	):
 		return Seq(
-			If(self.has_opted_in == Int(0), self.optin),
+			If(self.has_opted_in == Int(0), self.opt_in()),
 			Assert(Global.latest_timestamp() > self.claim_time),
 			InnerTxnBuilder.Execute({
 				TxnField.type_enum: TxnType.AssetTransfer,
@@ -105,3 +105,6 @@ class Asset(Application):
 			}),
 			self.claim_time.set(Global.latest_timestamp())
 		)
+
+
+Asset().dump()

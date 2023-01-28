@@ -1,0 +1,350 @@
+#pragma version 8
+intcblock 0 1 4 1000
+bytecblock 0x61737365745f6964 0x6861735f6f707465645f696e 0x636c61696d5f74696d65
+txn NumAppArgs
+intc_0 // 0
+==
+bnz main_l12
+txna ApplicationArgs 0
+pushbytes 0xef12ca61 // "create_token(string,string,uint64,uint64)void"
+==
+bnz main_l11
+txna ApplicationArgs 0
+pushbytes 0x2f3d096f // "transfer_to_creator(uint64,asset)void"
+==
+bnz main_l10
+txna ApplicationArgs 0
+pushbytes 0xc2ac3ba4 // "optin_asset(axfer,asset)void"
+==
+bnz main_l9
+txna ApplicationArgs 0
+pushbytes 0x53fa0ebe // "get_asset_id(asset)uint64"
+==
+bnz main_l8
+txna ApplicationArgs 0
+pushbytes 0x4f9914b3 // "get_asset_from_faucet(account,asset)void"
+==
+bnz main_l7
+err
+main_l7:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+store 10
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+store 11
+load 10
+load 11
+callsub getassetfromfaucet_8
+intc_1 // 1
+return
+main_l8:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+callsub getassetid_7
+store 8
+pushbytes 0x151f7c75 // 0x151f7c75
+load 8
+itob
+concat
+log
+intc_1 // 1
+return
+main_l9:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+store 7
+txn GroupIndex
+intc_1 // 1
+-
+store 6
+load 6
+gtxns TypeEnum
+intc_2 // axfer
+==
+assert
+load 6
+load 7
+callsub optinasset_6
+intc_1 // 1
+return
+main_l10:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+btoi
+store 4
+txna ApplicationArgs 2
+intc_0 // 0
+getbyte
+store 5
+load 4
+load 5
+callsub transfertocreator_5
+intc_1 // 1
+return
+main_l11:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+store 0
+txna ApplicationArgs 2
+store 1
+txna ApplicationArgs 3
+btoi
+store 2
+txna ApplicationArgs 4
+btoi
+store 3
+load 0
+load 1
+load 2
+load 3
+callsub createtoken_4
+intc_1 // 1
+return
+main_l12:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l16
+txn OnCompletion
+intc_1 // OptIn
+==
+bnz main_l15
+err
+main_l15:
+txn ApplicationID
+intc_0 // 0
+!=
+assert
+callsub optin_1
+intc_1 // 1
+return
+main_l16:
+txn ApplicationID
+intc_0 // 0
+==
+assert
+callsub create_0
+intc_1 // 1
+return
+
+// create
+create_0:
+bytec_0 // "asset_id"
+intc_0 // 0
+app_global_put
+retsub
+
+// opt_in
+optin_1:
+txn Sender
+bytec_2 // "claim_time"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec_1 // "has_opted_in"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec_1 // "has_opted_in"
+intc_1 // 1
+app_local_put
+retsub
+
+// auth_only
+authonly_2:
+global CreatorAddress
+==
+retsub
+
+// auth_only
+authonly_3:
+global CreatorAddress
+==
+retsub
+
+// create_token
+createtoken_4:
+store 15
+store 14
+store 13
+store 12
+txn Sender
+callsub authonly_2
+// unauthorized
+assert
+bytec_0 // "asset_id"
+app_global_get
+intc_0 // 0
+==
+assert
+itxn_begin
+pushint 3 // acfg
+itxn_field TypeEnum
+load 12
+extract 2 0
+itxn_field ConfigAssetName
+load 13
+extract 2 0
+itxn_field ConfigAssetUnitName
+load 14
+itxn_field ConfigAssetTotal
+load 15
+itxn_field ConfigAssetDecimals
+global CurrentApplicationAddress
+itxn_field ConfigAssetManager
+intc_3 // 1000
+itxn_field Fee
+itxn_submit
+bytec_0 // "asset_id"
+itxn CreatedAssetID
+app_global_put
+retsub
+
+// transfer_to_creator
+transfertocreator_5:
+store 17
+store 16
+txn Sender
+callsub authonly_3
+// unauthorized
+assert
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+bytec_0 // "asset_id"
+app_global_get
+itxn_field XferAsset
+global CreatorAddress
+itxn_field AssetReceiver
+load 16
+itxn_field AssetAmount
+intc_3 // 1000
+itxn_field Fee
+itxn_submit
+retsub
+
+// optin_asset
+optinasset_6:
+store 19
+store 18
+load 18
+gtxns Sender
+txn Sender
+==
+assert
+load 18
+gtxns AssetAmount
+intc_0 // 0
+==
+assert
+load 18
+gtxns AssetReceiver
+txn Sender
+==
+assert
+load 18
+gtxns XferAsset
+bytec_0 // "asset_id"
+app_global_get
+==
+assert
+retsub
+
+// get_asset_id
+getassetid_7:
+store 9
+bytec_0 // "asset_id"
+app_global_get
+retsub
+
+// get_asset_from_faucet
+getassetfromfaucet_8:
+store 21
+store 20
+txn Sender
+bytec_1 // "has_opted_in"
+app_local_get
+intc_0 // 0
+==
+bz getassetfromfaucet_8_l2
+txn Sender
+bytec_2 // "claim_time"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec_1 // "has_opted_in"
+intc_0 // 0
+app_local_put
+txn Sender
+bytec_1 // "has_opted_in"
+intc_1 // 1
+app_local_put
+getassetfromfaucet_8_l2:
+global LatestTimestamp
+txn Sender
+bytec_2 // "claim_time"
+app_local_get
+>
+assert
+itxn_begin
+intc_2 // axfer
+itxn_field TypeEnum
+bytec_0 // "asset_id"
+app_global_get
+itxn_field XferAsset
+load 20
+txnas Accounts
+itxn_field AssetReceiver
+intc_0 // 0
+itxn_field Amount
+intc_3 // 1000
+itxn_field Fee
+itxn_submit
+txn Sender
+bytec_2 // "claim_time"
+global LatestTimestamp
+app_local_put
+retsub

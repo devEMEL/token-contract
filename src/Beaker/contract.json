@@ -1,0 +1,90 @@
+{
+    "name": "Asset",
+    "methods": [
+        {
+            "name": "create_token",
+            "args": [
+                {
+                    "type": "string",
+                    "name": "asset_name"
+                },
+                {
+                    "type": "string",
+                    "name": "unit_name"
+                },
+                {
+                    "type": "uint64",
+                    "name": "total_supply"
+                },
+                {
+                    "type": "uint64",
+                    "name": "decimals"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "transfer_to_creator",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
+                    "type": "asset",
+                    "name": "aid"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "optin_asset",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "txn"
+                },
+                {
+                    "type": "asset",
+                    "name": "aid"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "get_asset_id",
+            "args": [
+                {
+                    "type": "asset",
+                    "name": "aid"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
+            "name": "get_asset_from_faucet",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "receiver"
+                },
+                {
+                    "type": "asset",
+                    "name": "aid"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        }
+    ],
+    "networks": {}
+}
