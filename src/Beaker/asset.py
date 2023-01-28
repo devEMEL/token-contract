@@ -12,10 +12,6 @@ class Asset(Application):
 		stack_type=TealType.uint64,
 		default=Int(0)
 	)
-	has_opted_in: Final[AccountStateValue] = AccountStateValue(
-		stack_type=TealType.uint64,
-		default=Int(0)
-	)
 
 	FEE = Int(1_000)
 
@@ -25,10 +21,7 @@ class Asset(Application):
 
 	@opt_in
 	def opt_in(self):
-		return Seq(
-			self.initialize_account_state(),
-			self.has_opted_in.set(Int(1))
-		)
+		return self.initialize_account_state()
 
 	@external(authorize=Authorize.only(Global.creator_address()))
 	def create_token(self, asset_name: abi.String, unit_name: abi.String, total_supply: abi.Uint64, decimals: abi.Uint64):
@@ -68,13 +61,13 @@ class Asset(Application):
 		aid: abi.Asset=asset_id # type: ignore[assignment]
 	):
 		return Seq(
-            Assert(
-                txn.get().sender() == Txn.sender(),
-                txn.get().asset_amount() == Int(0),
-                txn.get().asset_receiver() == Txn.sender(),
-                txn.get().xfer_asset() == self.asset_id
-            )
-        )
+			Assert(
+				txn.get().sender() == Txn.sender(),
+				txn.get().asset_amount() == Int(0),
+				txn.get().asset_receiver() == Txn.sender(),
+				txn.get().xfer_asset() == self.asset_id
+			)
+		)
 
 	@external
 	def get_asset_id(
@@ -88,6 +81,23 @@ class Asset(Application):
 		)
 
 	@external
+	def get_asset_bal(
+		self,
+		account: abi.Account,
+		asset_id: abi.Asset = asset_id,  # type: ignore[assignment]
+		*,
+		output: abi.Uint64
+	):
+		return Seq(
+			(
+				bal := AssetHolding.balance(
+					account=account.address(), asset=self.asset_id
+				)
+			),
+			output.set(bal.value())
+		)
+
+	@external
 	def get_asset_from_faucet(
 		self,
 		receiver: abi.Account,
@@ -95,14 +105,13 @@ class Asset(Application):
 		aid: abi.Asset=asset_id # type: ignore[assignment]
 	):
 		return Seq(
-			If(self.has_opted_in == Int(0), self.opt_in()),
-
+			Assert(App.optedIn(Txn.sender(), Global.current_application_id())),
 			Assert(Global.latest_timestamp() > self.claim_time),
 			InnerTxnBuilder.Execute({
 				TxnField.type_enum: TxnType.AssetTransfer,
 				TxnField.xfer_asset: self.asset_id,
 				TxnField.asset_receiver: receiver.address(),
-				TxnField.amount: Int(0),
+				TxnField.asset_amount: Int(20),
 				TxnField.fee: self.FEE			
 			}),
 			self.claim_time.set(Global.latest_timestamp() + time.get())

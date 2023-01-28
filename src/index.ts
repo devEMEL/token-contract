@@ -13,8 +13,8 @@ async function signer(txns: algosdk.Transaction[]) {
   return sTxns.map(s => s.blob)
 }
 
-let APPID = 156267680;
-let ASSETID = 156268281;
+let APPID = 156272915;
+let ASSETID = 156273400;
 
 
 
@@ -39,6 +39,8 @@ buttons.connect.onclick = async () => {
   
 }
 
+
+
 buttons.create_app.onclick = async () => {
   const AssetApp = new Asset({
     client: algodClient,
@@ -52,67 +54,67 @@ buttons.create_app.onclick = async () => {
   
 }
 
-// buttons.create_asset.onclick = async () => {
-//   const AssetApp = new Asset({
-//     client: algodClient,
-//     signer,
-//     sender: accountsMenu.selectedOptions[0].value,
-//     appId: APPID
-//   });
+buttons.create_asset.onclick = async () => {
+  const AssetApp = new Asset({
+    client: algodClient,
+    signer,
+    sender: accountsMenu.selectedOptions[0].value,
+    appId: APPID
+  });
 
   
-//   const result = await AssetApp.create_token({
-//     asset_name: String("Algo Smart Coin"),
-//     unit_name: String("ASC"),
-//     total_supply: BigInt(10_000_000_000),
-//     decimals: BigInt(0)
+  const result = await AssetApp.create_token({
+    asset_name: String("Algo Smart Coin"),
+    unit_name: String("ASC"),
+    total_supply: BigInt(10_000_000_000),
+    decimals: BigInt(0)
 
-//   });
-//   console.log(result);
+  });
+  console.log(result);
   
-// }
+}
 
 
-// buttons.optin_asset.onclick = async () => {
-//   const AssetApp = new Asset({
-//     client: algodClient,
-//     signer,
-//     sender: accountsMenu.selectedOptions[0].value,
-//     appId: APPID
-//   });
+buttons.optin_asset.onclick = async () => {
+  const AssetApp = new Asset({
+    client: algodClient,
+    signer,
+    sender: accountsMenu.selectedOptions[0].value,
+    appId: APPID
+  });
 
-//   const opt_txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-//     from: accountsMenu.selectedOptions[0].value,
-//     to: accountsMenu.selectedOptions[0].value,
-//     amount: 0,
-//     suggestedParams: await algodClient.getTransactionParams().do(),
-//     assetIndex: ASSETID,
-//   })
-//   const result = await AssetApp.optin_asset({txn: opt_txn});
-//   console.log(result)
-// }
+  const opt_txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    from: accountsMenu.selectedOptions[0].value,
+    to: accountsMenu.selectedOptions[0].value,
+    amount: 0,
+    suggestedParams: await algodClient.getTransactionParams().do(),
+    assetIndex: ASSETID,
+  })
+  const result = await AssetApp.optin_asset({txn: opt_txn});
+  console.log(result)
+}
 
-// buttons.transfer_to_creator.onclick = async () => {
-//   const AssetApp = new Asset({
-//     client: algodClient,
-//     signer,
-//     sender: accountsMenu.selectedOptions[0].value,
-//     appId: APPID
-//   });
+buttons.transfer_to_creator.onclick = async () => {
+  const AssetApp = new Asset({
+    client: algodClient,
+    signer,
+    sender: accountsMenu.selectedOptions[0].value,
+    appId: APPID
+  });
 
-//   const result = await AssetApp.transfer_to_creator({amount: BigInt(amountInput.valueAsNumber)});
-//   console.log(result)
-// }
+  const result = await AssetApp.transfer_to_creator({amount: BigInt(amountInput.valueAsNumber)});
+  console.log(result)
+}
 
-// buttons.get_asset_from_faucet.onclick = async () => {
-//   const AssetApp = new Asset({
-//     client: algodClient,
-//     signer,
-//     sender: accountsMenu.selectedOptions[0].value,
-//     appId: APPID
-//   });
+buttons.get_asset_from_faucet.onclick = async () => {
+  const AssetApp = new Asset({
+    client: algodClient,
+    signer,
+    sender: accountsMenu.selectedOptions[0].value,
+    appId: APPID
+  });
 
-//   const result = await AssetApp.get_asset_from_faucet({receiver: accountsMenu.selectedOptions[0].value, time: BigInt(600)});
-//   // 10 minutes
-//   console.log(result)
-// }
+  const result = await AssetApp.get_asset_from_faucet({receiver: accountsMenu.selectedOptions[0].value, time: BigInt(600)});
+  // 10 minutes
+  console.log(result)
+}

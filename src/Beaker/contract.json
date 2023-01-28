@@ -70,6 +70,22 @@
             }
         },
         {
+            "name": "get_asset_bal",
+            "args": [
+                {
+                    "type": "account",
+                    "name": "account"
+                },
+                {
+                    "type": "asset",
+                    "name": "asset_id"
+                }
+            ],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
             "name": "get_asset_from_faucet",
             "args": [
                 {
