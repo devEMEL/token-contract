@@ -64,7 +64,7 @@ buttons.create_app.onclick = async () => {
 //   const result = await AssetApp.create_token({
 //     asset_name: String("Algo Smart Coin"),
 //     unit_name: String("ASC"),
-//     total_supply: BigInt(1_000_000),
+//     total_supply: BigInt(10_000_000_000),
 //     decimals: BigInt(0)
 
 //   });
