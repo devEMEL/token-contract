@@ -1,6 +1,6 @@
 
-#README  
-Voting Application for Algorand Bootcamp Final Project
+##README  
+**Voting Application for Algorand Bootcamp Final Project**  
 
 The application is a voting  platform that focuses on authenticity, community focus, and emphasising the human elements of Algorand. 
 Its focus is set on privacy, digital identity and including underrepresented voices in conversations about inclusion and representation.
