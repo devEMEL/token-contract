@@ -1,3 +1,3 @@
 
 #README  
-Simple Voting Application for Algorand Bootcamp Final Project
+Voting Application for Algorand Bootcamp Final Project
