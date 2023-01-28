@@ -13,12 +13,12 @@ async function signer(txns: algosdk.Transaction[]) {
   return sTxns.map(s => s.blob)
 }
 
-let APPID = 156272915;
-let ASSETID = 156273400;
+let APPID = 156293058;
+let ASSETID = 156293328;
 
 
 
-const buttonIds = ['connect', 'create_app','create_asset', 'optin_asset', 'transfer_to_creator', 'get_asset_from_faucet'];
+const buttonIds = ['connect', 'create_app', 'opt_in', 'create_asset', 'optin_asset', 'get_asset_id', 'get_asset_bal', 'transfer_to_creator', 'get_asset_from_faucet'];
 const buttons: {[key: string]: HTMLButtonElement} = {};
 const accountsMenu = document.getElementById('accounts') as HTMLSelectElement;
 
@@ -66,7 +66,7 @@ buttons.create_asset.onclick = async () => {
   const result = await AssetApp.create_token({
     asset_name: String("Algo Smart Coin"),
     unit_name: String("ASC"),
-    total_supply: BigInt(10_000_000_000),
+    total_supply: BigInt(20_000_000_000),
     decimals: BigInt(0)
 
   });
