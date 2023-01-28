@@ -1,0 +1,55 @@
+#pragma version 8
+intcblock 0 1
+bytecblock 0x766f74655f63686f696365 0x6e756d5f6f665f766f74657273 0x766f74655f636f756e74 0x766f74655f616d6f756e74
+txn NumAppArgs
+intc_0 // 0
+==
+bnz main_l2
+err
+main_l2:
+callsub clearvote_0
+intc_1 // 1
+return
+
+// clear_vote
+clearvote_0:
+global LatestTimestamp
+pushbytes 0x766f74655f626567696e // "vote_begin"
+app_global_get
+>=
+assert
+global LatestTimestamp
+pushbytes 0x766f74655f656e64 // "vote_end"
+app_global_get
+<=
+assert
+txn Sender
+bytec_0 // "vote_choice"
+app_local_get
+pushbytes 0x796573 // "yes"
+==
+bz clearvote_0_l2
+bytec_1 // "num_of_voters"
+bytec_1 // "num_of_voters"
+app_global_get
+intc_1 // 1
+-
+app_global_put
+bytec_2 // "vote_count"
+bytec_2 // "vote_count"
+app_global_get
+txn Sender
+bytec_3 // "vote_amount"
+app_local_get
+-
+app_global_put
+txn Sender
+bytec_3 // "vote_amount"
+intc_0 // 0
+app_local_put
+clearvote_0_l2:
+txn Sender
+bytec_0 // "vote_choice"
+pushbytes 0x // ""
+app_local_put
+retsub

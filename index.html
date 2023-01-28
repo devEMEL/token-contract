@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Algorand Web App</title>
+    </head>
+    <body style="background-color: brown;text-align: center;margin-top: 50px;color: #fff;">
+        <h1 style="text-transform: uppercase;color: #fff;margin-bottom: 20px;">beaker voting app</h1>
+
+        <!-- Accounts -->
+        <select name="accounts" id="accounts">Select account</select>
+
+        <!-- connect -->
+        <button id="connect" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">connect wallet</button>
+
+        <!-- create app -->
+        <button id="create_app" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;" disabled>Create app</button>
+        <div id="create_app_status"></div>
+
+        <!-- create token and log token id -->
+        <button id="create_asset" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;" disabled>Create token</button>
+        <div id="create_asset_status"></div>
+        <br>
+        <div style="font-size: 22px; color: rgb(0, 0, 0);">Number of voters: <span id="num_of_voters">0</span></div>
+        <div style="font-size: 22px; color: rgb(0, 0, 0);">Vote Count: <span id="vote_count">0</span></div>
+        <br>
+        <!-- optin to the contract -->
+        <button id="optin_to_app" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Optin to contract</button>
+        <div id="optin_to_app_status"></div> <br>
+
+        <!-- optin the addresses to the token id -->
+        <button id="optin_to_asset" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Optin to token</button>
+        <div id="optin_to_asset_status"></div><br>
+
+        <!-- send token to the addresses  (they have to be opted into the contract first) -->
+        <input type="number" id="transfer_amount" placeholder="Enter an amount of ENS " style="padding: 16px 16px;">
+        <button id="transfer_asset" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Transfer asset</button>
+        <div>please enter an amount of the asset ENS you would like the contract to send to you. Remember, if you request less than 1000, when you cast your vote it wont be recorded and you cant be able to vote</div>
+        <div id="transfer_asset_status"></div>
+        <br>
+
+        <!-- create_registration_and_voting -->
+        <button id="create_registration_and_voting" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Create registration and voting (sets the period of time for registration)</button>
+        <div>click to reset the time</div>
+        <div>Registration is between 2 to 20 minutes of clicking this button - (create_registration_and_voting)</div>
+        <div>voting is between 30 minutes to 3 hour of clicking this function - (create_registration_and_voting)</div>
+        <div><b>so the interval between registration and voting is 10 minutes, during registration period, please register all the wallet you would use for testing and wait for voting period</b></div>
+        <div>In voting period, you can cast vote or clear vote </div>
+        <div>You can always call the function (create_registration_and_voting) to reset the time again.</div>
+        <div>The caller address serves as the admin address, <b>test the other functions with other addresses<b></div>
+        <div id="create_registration_and_voting_status"></div>
+        <br>
+
+        <button id="register" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Register to vote</button>
+        <div id="register_status"></div> <br>
+
+        <!-- cast vote -->
+        <button id="cast_vote" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Cast vote</button>
+        <div id="cast_vote_status"></div><br>
+
+        <!-- clear vote -->
+        <button id="clear_vote" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Clear vote</button>
+        <div id="clear_vote_status"></div><br><br><br>
+        <div style="font-size: 16px;">Follow the link to algo explorer to see all the states and how they update</div>
+        <a href="https://testnet.algoexplorer.io/application/155936954" target="_blank"> Algo explorer</a>
+
+
+        <!-- asset_holding
+        <button id="asset_holding">Asset holding</button> -->
+
+    </body>
+</html>

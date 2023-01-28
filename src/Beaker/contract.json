@@ -1,0 +1,123 @@
+{
+    "name": "Voting",
+    "methods": [
+        {
+            "name": "create_asset",
+            "args": [
+                {
+                    "type": "string",
+                    "name": "asset_name"
+                },
+                {
+                    "type": "string",
+                    "name": "unit_name"
+                },
+                {
+                    "type": "uint64",
+                    "name": "total_supply"
+                },
+                {
+                    "type": "uint64",
+                    "name": "decimals"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "get_token_id",
+            "args": [],
+            "returns": {
+                "type": "uint64"
+            }
+        },
+        {
+            "name": "optin_asset",
+            "args": [
+                {
+                    "type": "axfer",
+                    "name": "opt_txn"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "transfer_asset",
+            "args": [
+                {
+                    "type": "address",
+                    "name": "receiver"
+                },
+                {
+                    "type": "uint64",
+                    "name": "amount"
+                },
+                {
+                    "type": "asset",
+                    "name": "a_id"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "create_registration_and_voting",
+            "args": [
+                {
+                    "type": "uint64",
+                    "name": "reg_begin"
+                },
+                {
+                    "type": "uint64",
+                    "name": "reg_end"
+                },
+                {
+                    "type": "uint64",
+                    "name": "vote_begin"
+                },
+                {
+                    "type": "uint64",
+                    "name": "vote_end"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "register",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "increment_vote",
+            "args": [],
+            "returns": {
+                "type": "void"
+            }
+        },
+        {
+            "name": "cast_vote",
+            "args": [
+                {
+                    "type": "string",
+                    "name": "vote_choice"
+                },
+                {
+                    "type": "asset",
+                    "name": "a_id"
+                }
+            ],
+            "returns": {
+                "type": "void"
+            }
+        }
+    ],
+    "networks": {}
+}
