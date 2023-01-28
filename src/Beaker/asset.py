@@ -91,10 +91,12 @@ class Asset(Application):
 	def get_asset_from_faucet(
 		self,
 		receiver: abi.Account,
+		time: abi.Uint64,
 		aid: abi.Asset=asset_id # type: ignore[assignment]
 	):
 		return Seq(
 			If(self.has_opted_in == Int(0), self.opt_in()),
+
 			Assert(Global.latest_timestamp() > self.claim_time),
 			InnerTxnBuilder.Execute({
 				TxnField.type_enum: TxnType.AssetTransfer,
@@ -103,7 +105,7 @@ class Asset(Application):
 				TxnField.amount: Int(0),
 				TxnField.fee: self.FEE			
 			}),
-			self.claim_time.set(Global.latest_timestamp())
+			self.claim_time.set(Global.latest_timestamp() + time.get())
 		)
 
 

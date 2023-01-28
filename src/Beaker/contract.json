@@ -77,6 +77,10 @@
                     "name": "receiver"
                 },
                 {
+                    "type": "uint64",
+                    "name": "time"
+                },
+                {
                     "type": "asset",
                     "name": "aid"
                 }

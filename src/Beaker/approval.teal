@@ -22,7 +22,7 @@ pushbytes 0x53fa0ebe // "get_asset_id(asset)uint64"
 ==
 bnz main_l8
 txna ApplicationArgs 0
-pushbytes 0x4f9914b3 // "get_asset_from_faucet(account,asset)void"
+pushbytes 0xd557864a // "get_asset_from_faucet(account,uint64,asset)void"
 ==
 bnz main_l7
 err
@@ -40,11 +40,15 @@ intc_0 // 0
 getbyte
 store 10
 txna ApplicationArgs 2
+btoi
+store 11
+txna ApplicationArgs 3
 intc_0 // 0
 getbyte
-store 11
+store 12
 load 10
 load 11
+load 12
 callsub getassetfromfaucet_8
 intc_1 // 1
 return
@@ -207,10 +211,10 @@ retsub
 
 // create_token
 createtoken_4:
+store 16
 store 15
 store 14
 store 13
-store 12
 txn Sender
 callsub authonly_2
 // unauthorized
@@ -223,15 +227,15 @@ assert
 itxn_begin
 pushint 3 // acfg
 itxn_field TypeEnum
-load 12
-extract 2 0
-itxn_field ConfigAssetName
 load 13
 extract 2 0
-itxn_field ConfigAssetUnitName
+itxn_field ConfigAssetName
 load 14
-itxn_field ConfigAssetTotal
+extract 2 0
+itxn_field ConfigAssetUnitName
 load 15
+itxn_field ConfigAssetTotal
+load 16
 itxn_field ConfigAssetDecimals
 global CurrentApplicationAddress
 itxn_field ConfigAssetManager
@@ -245,8 +249,8 @@ retsub
 
 // transfer_to_creator
 transfertocreator_5:
+store 18
 store 17
-store 16
 txn Sender
 callsub authonly_3
 // unauthorized
@@ -259,7 +263,7 @@ app_global_get
 itxn_field XferAsset
 global CreatorAddress
 itxn_field AssetReceiver
-load 16
+load 17
 itxn_field AssetAmount
 intc_3 // 1000
 itxn_field Fee
@@ -268,24 +272,24 @@ retsub
 
 // optin_asset
 optinasset_6:
+store 20
 store 19
-store 18
-load 18
+load 19
 gtxns Sender
 txn Sender
 ==
 assert
-load 18
+load 19
 gtxns AssetAmount
 intc_0 // 0
 ==
 assert
-load 18
+load 19
 gtxns AssetReceiver
 txn Sender
 ==
 assert
-load 18
+load 19
 gtxns XferAsset
 bytec_0 // "asset_id"
 app_global_get
@@ -302,8 +306,9 @@ retsub
 
 // get_asset_from_faucet
 getassetfromfaucet_8:
+store 23
+store 22
 store 21
-store 20
 txn Sender
 bytec_1 // "has_opted_in"
 app_local_get
@@ -335,7 +340,7 @@ itxn_field TypeEnum
 bytec_0 // "asset_id"
 app_global_get
 itxn_field XferAsset
-load 20
+load 21
 txnas Accounts
 itxn_field AssetReceiver
 intc_0 // 0
@@ -346,5 +351,7 @@ itxn_submit
 txn Sender
 bytec_2 // "claim_time"
 global LatestTimestamp
+load 22
++
 app_local_put
 retsub
