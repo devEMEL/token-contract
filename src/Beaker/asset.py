@@ -1,6 +1,6 @@
 from typing import Final
 from pyteal import *
-from beaker import Application, Authorize, ApplicationStateValue, AccountStateValue, external, create
+from beaker import Application, Authorize, ApplicationStateValue, AccountStateValue, external, create, optin
 
 
 class Asset(Application):
@@ -8,7 +8,11 @@ class Asset(Application):
 		stack_type=TealType.uint64,
 		default=Int(0)
 	)
-	has_claimed: Final[AccountStateValue] = AccountStateValue(
+	claim_time: Final[AccountStateValue] = AccountStateValue(
+		stack_type=TealType.uint64,
+		default=Int(0)
+	)
+	has_opted_in: Final[AccountStateValue] = AccountStateValue(
 		stack_type=TealType.uint64,
 		default=Int(0)
 	)
@@ -17,11 +21,16 @@ class Asset(Application):
 
 	@create
 	def create(self):
+		return self.initialize_application_state()
+
+	@optin
+	def optin(self):
 		return Seq(
-			self.initialize_application_state()
+			self.initialize_account_state(),
+			self.has_opted_in.set(Int(1))
 		)
 
-	@external
+	@external(authorize=Authorize.only(Global.creator_address()))
 	def create_token(self, asset_name: abi.String, unit_name: abi.String, total_supply: abi.Uint64, decimals: abi.Uint64):
 		return Seq(
 			Assert(self.asset_id == Int(0)),
@@ -59,7 +68,40 @@ class Asset(Application):
 		aid: abi.Asset=asset_id # type: ignore[assignment]
 	):
 		return Seq(
-			Assert(
-				
-			)
+            Assert(
+                txn.get().sender() == Txn.sender(),
+                txn.get().asset_amount() == Int(0),
+                txn.get().asset_receiver() == Txn.sender(),
+                txn.get().xfer_asset() == self.asset_id
+            )
+        )
+
+	@external
+	def get_asset_id(
+		self,
+		aid: abi.Asset=asset_id, # type: ignore[assignment]
+		*,
+		output: abi.Uint64
+	):
+		return Seq(
+			output.set(self.asset_id)
+		)
+
+	@external
+	def get_asset_from_faucet(
+		self,
+		receiver: abi.Account,
+		aid: abi.Asset=asset_id # type: ignore[assignment]
+	):
+		return Seq(
+			If(self.has_opted_in == Int(0), self.optin),
+			Assert(Global.latest_timestamp() > self.claim_time),
+			InnerTxnBuilder.Execute({
+				TxnField.type_enum: TxnType.AssetTransfer,
+				TxnField.xfer_asset: self.asset_id,
+				TxnField.asset_receiver: receiver.address(),
+				TxnField.amount: Int(0),
+				TxnField.fee: self.FEE			
+			}),
+			self.claim_time.set(Global.latest_timestamp())
 		)
