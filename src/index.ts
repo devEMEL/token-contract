@@ -1,3 +1,4 @@
+import "app.css";
 import algosdk from "algosdk";
 
 import { MyAlgoSession } from "./wallets/myalgo";
@@ -23,7 +24,7 @@ async function signer(txns: algosdk.Transaction[]) {
 let APPID = 156293058;
 let ASSETID = 156293328;
 
-//truncate wallet
+//truncate wallet address
 const truncate = (
   text: string,
   startChars: number,
