@@ -18,7 +18,7 @@ let ASSETID = 156293328;
 
 
 
-const buttonIds = ['connect', 'create_app', 'opt_in', 'create_asset', 'optin_asset', 'get_asset_id', 'get_asset_bal', 'transfer_to_creator', 'get_asset_from_faucet'];
+const buttonIds = ['connect', 'create_app', 'opt_in', 'create_asset', 'optin_to_contract', 'optin_asset', 'get_asset_id', 'get_asset_bal', 'transfer_to_creator', 'get_asset_from_faucet'];
 const buttons: {[key: string]: HTMLButtonElement} = {};
 const accountsMenu = document.getElementById('accounts') as HTMLSelectElement;
 
@@ -74,6 +74,17 @@ buttons.create_asset.onclick = async () => {
   
 }
 
+buttons.optin_to_contract.onclick = async () => {
+  const AssetApp = new Asset({
+    client: algodClient,
+    signer,
+    sender: accountsMenu.selectedOptions[0].value,
+    appId: APPID
+  });
+
+  const result = await AssetApp.optIn();
+  console.log(result)
+}
 
 buttons.optin_asset.onclick = async () => {
   const AssetApp = new Asset({
@@ -107,6 +118,7 @@ buttons.transfer_to_creator.onclick = async () => {
 }
 
 buttons.get_asset_from_faucet.onclick = async () => {
+
   const AssetApp = new Asset({
     client: algodClient,
     signer,
@@ -114,7 +126,8 @@ buttons.get_asset_from_faucet.onclick = async () => {
     appId: APPID
   });
 
-  const result = await AssetApp.get_asset_from_faucet({receiver: accountsMenu.selectedOptions[0].value, time: BigInt(600)});
-  // 10 minutes
+  const result = await AssetApp.get_asset_from_faucet({receiver: accountsMenu.selectedOptions[0].value, time: BigInt(86400)});
+  // 2 minutes
   console.log(result)
+  console.log(AssetApp.getAccountState())
 }
