@@ -1,8 +1,12 @@
 
-##README  
-**Voting Application for Algorand Bootcamp Final Project**  
+## AST Token 
+This Application enables a user to get free AST tokens so that they can be able to use them in their Staking Application.
+## Steps
+*A user first neeeds to connect their Algo Wallet.Incase you have no Algo Wallet you can create an account here.
+https://wallet.myalgo.com/
+* A user gets to Opt in to the Contract
+* A user gets to Opt in to the AST token
+* A user gets their free Tokens from Faucet
 
-The application declares a voting  platform that values are build on authenticity, community focus, and emphasising the human elements of Algorand. 
-Its focus is set on privacy, digital identity and including underrepresented voices in conversations about inclusion and representation.
+The  User is limited to getting only 20 AST tokens in 24 Hours
 
-In addition to established basic features the items on the roadmap are leveraging the capabilities of defi and social use-cases while also being of value for sports and sport enabling organisations.
