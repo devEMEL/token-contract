@@ -17,7 +17,7 @@
 
       <button
         onclick="truncate()"
-        id="connection"
+        id="connect"
         class="shadow-xl shadow-black text-white bg-green-400 hover:bg-green-600 md:text-xs p-2 rounded-full"
       >
         Connect Wallet
@@ -49,26 +49,5 @@
         </button>
       </div>
     </main>
-
-    <script>
-      const truncate = (
-        text = "0x0872893278987067858758755028302",
-        startChars = 4,
-        endChars = 4,
-        maxLength = 11
-      ) => {
-        if (text.length > maxLength) {
-          var start = text.substring(0, startChars);
-          var end = text.substring(text.length - endChars, text.length);
-          while (start.length + end.length < maxLength) {
-            start = start + ".";
-          }
-          document.getElementById("connection").innerHTML = `${start + end}`;
-          return;
-        }
-
-        document.getElementById("connection").innerHTML = `${text}`;
-      };
-    </script>
   </body>
 </html>
