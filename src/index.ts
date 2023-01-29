@@ -1,4 +1,4 @@
-import "app.css";
+// import "app.css";
 import algosdk from "algosdk";
 
 import { MyAlgoSession } from "./wallets/myalgo";
@@ -52,7 +52,7 @@ const buttonIds = [
   "optin_asset",
   //"get_asset_id",
   //"get_asset_bal",
-  //"transfer_to_creator",
+  // "transfer_to_creator",
   "get_asset_from_faucet",
 ];
 const buttons: { [key: string]: HTMLButtonElement } = {};
@@ -164,7 +164,7 @@ buttons.get_asset_from_faucet.onclick = async () => {
 
   const result = await AssetApp.get_asset_from_faucet({
     receiver: accountsMenu.selectedOptions[0].value,
-    time: BigInt(86400),
+    time: BigInt(120),
   });
   // 2 minutes
   console.log(result);
