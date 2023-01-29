@@ -1,36 +1,74 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="style.css" />
-        <title>Algorand Web App</title>
-    </head>
-    <body style="background-color: brown;text-align: center;margin-top: 50px;color: #fff;">
-        <h1 style="text-transform: uppercase;color: #fff;margin-bottom: 20px;">beaker voting app</h1>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algo Smart Token</title>
+    <link href="./app.css" rel="stylesheet" />
+  </head>
+  <body class="gradient-bg-body">
+    <header class="w-4/5 flex justify-between items-center py-4 mx-auto">
+      <div
+        class="md:flex-[0.5] flex-initial justify-center items-center text-white font-bold text-2xl"
+      >
+        Algo Smart
+      </div>
 
-        <!-- Accounts -->
-        <select name="accounts" id="accounts">Select account</select>
+      <button
+        onclick="truncate()"
+        id="connection"
+        class="shadow-xl shadow-black text-white bg-green-400 hover:bg-green-600 md:text-xs p-2 rounded-full"
+      >
+        Connect Wallet
+      </button>
+    </header>
 
-        <!-- connect -->
-        <button id="connect" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">connect wallet</button><br><br>
+    <main class="flex justify-center">
+      <div
+        class="bg-[#151c25] py-4 flex flex-col justify-center items-center shadow-md shadow-green-500 rounded-xl w-[400px] h-auto mt-28"
+      >
+        <button
+          class="w-full max-w-[300px] my-2 text-white bg-green-400 hover:bg-green-600 p-2 py-3 rounded-full"
+        >
+          Get Token From Faucet
+        </button>
+        <small class="text-gray-400 mb-2">
+          You only get 20 AST tokens in 24 hours</small
+        >
+        <button
+          class="w-full max-w-[300px] my-2 text-white bg-green-400 hover:bg-green-600 p-2 py-3 rounded-full"
+        >
+          Optin Asset
+        </button>
 
-        <!-- create app -->
-        <button id="create_app" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;" disabled>Create app</button><br><br>
-        <div id="create_app_status"></div>
+        <button
+          class="w-full max-w-[300px] my-2 text-white bg-green-400 hover:bg-green-600 p-2 py-3 rounded-full"
+        >
+          Optin to token
+        </button>
+      </div>
+    </main>
 
-        <!-- create token and log token id -->
-        <button id="create_asset" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;" disabled>Create Asset</button><br><br>
+    <script>
+      const truncate = (
+        text = "0x0872893278987067858758755028302",
+        startChars = 4,
+        endChars = 4,
+        maxLength = 11
+      ) => {
+        if (text.length > maxLength) {
+          var start = text.substring(0, startChars);
+          var end = text.substring(text.length - endChars, text.length);
+          while (start.length + end.length < maxLength) {
+            start = start + ".";
+          }
+          document.getElementById("connection").innerHTML = `${start + end}`;
+          return;
+        }
 
-        <button id="optin_to_contract" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">optin to contract</button><br><br>
-
-        <button id="optin_asset" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">optin asset</button><br><br>
-
-        <input type="number" id="transfer_amount" placeholder="Enter an amount of ASC " style="padding: 16px 16px;">
-        <button id="transfer_to_creator" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">Transfer to creator</button><br><br>
-
-        <!-- cast vote -->
-        <button id="get_asset_from_faucet" style="padding: 10px 15px;text-align: center;text-decoration: none;color: black;font-size: 16px;">get asset from faucet</button><br><br>
-
-
-    </body>
+        document.getElementById("connection").innerHTML = `${text}`;
+      };
+    </script>
+  </body>
 </html>
