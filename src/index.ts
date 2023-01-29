@@ -1,4 +1,4 @@
-import "app.css";
+
 import algosdk from "algosdk";
 
 import { MyAlgoSession } from "./wallets/myalgo";
