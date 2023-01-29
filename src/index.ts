@@ -85,6 +85,7 @@ buttons.create_app.onclick = async () => {
   });
 
   const { appId, appAddress, txId } = await AssetApp.create();
+  
 
   document.getElementById(
     "create_app_status"
