@@ -45,14 +45,14 @@ const truncate = (
 
 const buttonIds = [
   "connect",
-  "create_app",
-  "opt_in",
-  "create_asset",
+  // "create_app",
+  // "opt_in",
+  // "create_asset",
   "optin_to_contract",
   "optin_asset",
-  "get_asset_id",
-  "get_asset_bal",
-  "transfer_to_creator",
+  //"get_asset_id",
+  //"get_asset_bal",
+  //"transfer_to_creator",
   "get_asset_from_faucet",
 ];
 const buttons: { [key: string]: HTMLButtonElement } = {};
@@ -78,37 +78,36 @@ buttons.connect.onclick = async () => {
   });
 };
 
-buttons.create_app.onclick = async () => {
-  const AssetApp = new Asset({
-    client: algodClient,
-    signer,
-    sender: accountsMenu.selectedOptions[0].value,
-  });
+// buttons.create_app.onclick = async () => {
+//   const AssetApp = new Asset({
+//     client: algodClient,
+//     signer,
+//     sender: accountsMenu.selectedOptions[0].value,
+//   });
 
-  const { appId, appAddress, txId } = await AssetApp.create();
-  
+//   const { appId, appAddress, txId } = await AssetApp.create();
 
-  document.getElementById(
-    "create_app_status"
-  ).innerHTML = `App created with id: ${appId} and address: ${appAddress} in txId: ${txId}`;
-};
+//   document.getElementById(
+//     "create_app_status"
+//   ).innerHTML = `App created with id: ${appId} and address: ${appAddress} in txId: ${txId}`;
+// };
 
-buttons.create_asset.onclick = async () => {
-  const AssetApp = new Asset({
-    client: algodClient,
-    signer,
-    sender: accountsMenu.selectedOptions[0].value,
-    appId: APPID,
-  });
+// buttons.create_asset.onclick = async () => {
+//   const AssetApp = new Asset({
+//     client: algodClient,
+//     signer,
+//     sender: accountsMenu.selectedOptions[0].value,
+//     appId: APPID,
+//   });
 
-  const result = await AssetApp.create_token({
-    asset_name: String("Algo Smart Coin"),
-    unit_name: String("ASC"),
-    total_supply: BigInt(20_000_000_000),
-    decimals: BigInt(0),
-  });
-  console.log(result);
-};
+//   const result = await AssetApp.create_token({
+//     asset_name: String("Algo Smart Coin"),
+//     unit_name: String("ASC"),
+//     total_supply: BigInt(20_000_000_000),
+//     decimals: BigInt(0),
+//   });
+//   console.log(result);
+// };
 
 buttons.optin_to_contract.onclick = async () => {
   const AssetApp = new Asset({
@@ -141,19 +140,19 @@ buttons.optin_asset.onclick = async () => {
   console.log(result);
 };
 
-buttons.transfer_to_creator.onclick = async () => {
-  const AssetApp = new Asset({
-    client: algodClient,
-    signer,
-    sender: accountsMenu.selectedOptions[0].value,
-    appId: APPID,
-  });
+// buttons.transfer_to_creator.onclick = async () => {
+//   const AssetApp = new Asset({
+//     client: algodClient,
+//     signer,
+//     sender: accountsMenu.selectedOptions[0].value,
+//     appId: APPID,
+//   });
 
-  const result = await AssetApp.transfer_to_creator({
-    amount: BigInt(amountInput.valueAsNumber),
-  });
-  console.log(result);
-};
+//   const result = await AssetApp.transfer_to_creator({
+//     amount: BigInt(amountInput.valueAsNumber),
+//   });
+//   console.log(result);
+// };
 
 buttons.get_asset_from_faucet.onclick = async () => {
   const AssetApp = new Asset({
