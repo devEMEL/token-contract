@@ -10,6 +10,6 @@ https://wallet.myalgo.com/
 
 The  User is limited to getting only 20 ASC tokens in 24 Hours
 
-[ASC Token App](https://guileless-trifle-c4da5f.netlify.app/)  
+[ASC Token App Website](https://guileless-trifle-c4da5f.netlify.app/)  
 [ASC Token ID 156293328 on AlgoExplorer](https://testnet.algoexplorer.io/asset/156293328)  
 [ASC App ID 156293058 on AlgoExplorer](https://testnet.algoexplorer.io/application/156293058)  
