@@ -34,7 +34,7 @@ class Asset(Application):
 	@external(authorize=Authorize.only(Global.creator_address()))
 	# The create_token method is used to instantiate the token
 	def create_token(self, asset_name: abi.String, unit_name: abi.String, total_supply: abi.Uint64, decimals: abi.Uint64):
-		# The Seq method is used to execute multiple operations in a single transaction group
+		# The chaining expression seq is used to execute multiple operations in a single transaction group
 		return Seq(
 			Assert(self.asset_id == Int(0)),
 			InnerTxnBuilder.Execute({		
