@@ -2,7 +2,7 @@
 ## ASC Token 
 This Application enables a user to get free ASC tokens so that they can stake them in the Staking Application.
 ## Steps
-*A user first neeeds to connect their Algo Wallet.Incase you have no Algo Wallet you can create an account here.
+*A user first needs to connect their Algo Wallet.Incase you have no Algo Wallet you can create an account here.
 https://wallet.myalgo.com/
 * A user Opts in to the Contract
 * A user Opts in to the ASC token
